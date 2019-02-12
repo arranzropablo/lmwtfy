@@ -1,0 +1,46 @@
+basePath: /v1
+host: petstore.swagger.io
+info:
+  contact:
+    email: hi@arranzropablo.com
+    name: Pablo Arranz Ropero
+    url: http://arranzropablo.com
+  description: This is a sample server to store a list of films.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: The List API
+  version: "1.0"
+paths:
+  /user/new:
+    get:
+      consumes:
+      - application/json
+      description: Creates an user
+      parameters:
+      - description: username
+        in: body
+        name: user
+        required: true
+        schema:
+          type: object
+      - description: password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: no ok
+          schema:
+            type: string
+      summary: Create user
+swagger: "2.0"
