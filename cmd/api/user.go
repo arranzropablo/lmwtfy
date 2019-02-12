@@ -8,7 +8,7 @@ import (
 // CreateUser godoc
 // @Summary Create user
 // @Description Creates an user
-// @Accept  json
+// @Accept json
 // @Produce  json
 // @Param user body string true "username"
 // @Param password body string true "password"
