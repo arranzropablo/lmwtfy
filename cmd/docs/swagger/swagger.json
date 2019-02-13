@@ -16,7 +16,7 @@
         "version": "1.0"
     },
     "host": "{{.Host}}",
-    "basePath": "/v1",
+    "basePath": "{{.BasePath}}",
     "paths": {
         "/search": {
             "post": {

@@ -1,7 +1,7 @@
 package search
 
 import (
-	"io"
+	"encoding/json"
 	"net/http"
 )
 
@@ -11,14 +11,28 @@ import (
 // @Accept json
 // @Produce json
 // @Param main body search.body true "The string you want to search by"
-// @Success 200 {string} string "ok"
-// @Failure 400 {string} string "no ok"
+// @Success 200 {string} string "Everything went OK"
 // @Router /search [post]
 func Search(res http.ResponseWriter, req *http.Request) {
-	io.WriteString(res, "Search: " + req.FormValue("search"))
+	var search body
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&search)
+	if err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling
+	_, err = res.Write([]byte(search.Search))
+	if err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	res.WriteHeader(http.StatusOK)
 }
 
-
 type body struct {
-	search string `json:"search" example:"madgyvers"`
+	//To access application/json request fields they have to be exported
+	Search string `json:"search" example:"madgyvers"`
 }

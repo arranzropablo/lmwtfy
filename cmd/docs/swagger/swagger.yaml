@@ -1,4 +1,4 @@
-basePath: /v1
+basePath: '{{.BasePath}}'
 definitions:
   search.body:
     properties:

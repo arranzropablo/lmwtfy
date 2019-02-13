@@ -22,7 +22,6 @@ const PORT = ":8888"
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @BasePath /v1
 func main() {
 
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
