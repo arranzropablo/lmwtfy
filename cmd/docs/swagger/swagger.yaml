@@ -1,35 +1,38 @@
 basePath: /v1
-host: petstore.swagger.io
+definitions:
+  search.body:
+    properties:
+      search:
+        example: madgyvers
+        type: string
+    type: object
+host: '{{.Host}}'
 info:
   contact:
     email: hi@arranzropablo.com
     name: Pablo Arranz Ropero
     url: http://arranzropablo.com
-  description: This is a sample server to store a list of films.
+  description: This is a simple API which gets a thing to search and returns the URL
+    for the wiki search.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: The List API
+  title: LMWTFY API doc
   version: "1.0"
 paths:
-  /user/new:
-    get:
+  /search:
+    post:
       consumes:
       - application/json
       description: Creates an user
       parameters:
-      - description: username
+      - description: The string you want to search by
         in: body
-        name: user
+        name: main
         required: true
         schema:
-          type: object
-      - description: password
-        in: body
-        name: password
-        required: true
-        schema:
+          $ref: '#/definitions/search.body'
           type: object
       produces:
       - application/json

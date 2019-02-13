@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server to store a list of films.",
-        "title": "The List API",
+        "description": "This is a simple API which gets a thing to search and returns the URL for the wiki search.",
+        "title": "LMWTFY API doc",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "Pablo Arranz Ropero",
@@ -15,11 +15,11 @@
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "{{.Host}}",
     "basePath": "/v1",
     "paths": {
-        "/user/new": {
-            "get": {
+        "/search": {
+            "post": {
                 "description": "Creates an user",
                 "consumes": [
                     "application/json"
@@ -30,21 +30,13 @@
                 "summary": "Create user",
                 "parameters": [
                     {
-                        "description": "username",
-                        "name": "user",
+                        "description": "The string you want to search by",
+                        "name": "main",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "description": "password",
-                        "name": "password",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object"
+                            "type": "object",
+                            "$ref": "#/definitions/search.body"
                         }
                     }
                 ],
@@ -61,6 +53,17 @@
                             "type": "string"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "search.body": {
+            "type": "object",
+            "properties": {
+                "search": {
+                    "type": "string",
+                    "example": "madgyvers"
                 }
             }
         }
