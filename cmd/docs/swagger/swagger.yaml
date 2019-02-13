@@ -38,11 +38,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: ok
-          schema:
-            type: string
-        "400":
-          description: no ok
+          description: Everything went OK
           schema:
             type: string
       summary: Create user

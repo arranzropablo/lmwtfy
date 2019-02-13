@@ -3,7 +3,15 @@ package search
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
+	"strings"
 )
+
+//To access application/json request fields they have to be exported (capitalize)
+
+type body struct {
+	Search string `json:"search" example:"madgyvers"`
+}
 
 // Search godoc
 // @Summary Create user
@@ -22,17 +30,28 @@ func Search(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	//cant define an example value for response in swaggo
 	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling
-	_, err = res.Write([]byte(search.Search))
-	if err != nil {
-		http.Error(res, err.Error(), http.StatusInternalServerError)
+
+	if link, ok := retrieveLink(search.Search); ok {
+		res.WriteHeader(http.StatusOK)
+		res.Write([]byte(link))
+	} else {
+		http.Error(res, "Empty search!!!", http.StatusInternalServerError)
 		return
 	}
-
-	res.WriteHeader(http.StatusOK)
 }
 
-type body struct {
-	//To access application/json request fields they have to be exported
-	Search string `json:"search" example:"madgyvers"`
+
+//scape chars before writing em into the body
+func retrieveLink(search string) (string, bool) {
+	if search == "" {
+		return "", false
+	}
+	s := strings.Join(strings.Split(search, " "), "+")
+
+	return "https://wiki.web.zooplus.de/dosearchsite.action?cql=siteSearch+~+" +
+		"\"" + url.PathEscape(s) + "\"" +
+		"&queryString=" + url.PathEscape(s), true
+
 }
