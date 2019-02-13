@@ -24,7 +24,7 @@ paths:
   /search:
     post:
       consumes:
-      - application/json
+      - application/x-www-form-urlencoded
       description: Creates an user
       parameters:
       - description: The string you want to search by

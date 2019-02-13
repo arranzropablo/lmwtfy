@@ -10,6 +10,7 @@ import (
 
 const PORT = ":8888"
 
+
 // @title LMWTFY API doc
 // @version 1.0
 // @description This is a simple API which gets a thing to search and returns the URL for the wiki search.
@@ -21,7 +22,6 @@ const PORT = ":8888"
 
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
 func main() {
 
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
