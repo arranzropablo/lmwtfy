@@ -1,6 +1,8 @@
 package search
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -31,6 +33,7 @@ func Search(res http.ResponseWriter, req *http.Request) {
 	//}
 
 	//cant define an example value for response in swaggo
+	//need to deploy it publicly
 	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling
 
 	req.ParseForm()
@@ -45,16 +48,23 @@ func Search(res http.ResponseWriter, req *http.Request) {
 	}
 
 	if link, ok := retrieveLink(search); ok {
-		res.WriteHeader(http.StatusOK)
-		res.Write([]byte(mention + " let me wiki that for you... \n" + link))
+
+		jsonResp, _ := json.Marshal(struct {
+			Type string `json:"response_type"`
+			Text string `json:"text"`
+		}{
+			Type: "in_channel",
+			Text: fmt.Sprintf("%s", mention + " let me wiki that for you... \n" + link),
+		})
+
+		res.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(res, string(jsonResp))
 	} else {
 		http.Error(res, "Empty search!!!", http.StatusInternalServerError)
 		return
 	}
 }
 
-
-//scape chars before writing em into the body
 func retrieveLink(search string) (string, bool) {
 	if search == "" {
 		return "", false
