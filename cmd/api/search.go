@@ -39,7 +39,7 @@ func Search(res http.ResponseWriter, req *http.Request) {
 
 	splt := regexp.MustCompile(" <@").Split(search, -1)
 
-	if splt != nil {
+	if len(splt) > 1 {
 		mention = "<@" + regexp.MustCompile("\\|").Split(splt[len(splt) - 1], -1)[0] + ">"
 		search = strings.Join(splt[:len(splt) - 1], "")
 	}
