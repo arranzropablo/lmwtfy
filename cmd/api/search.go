@@ -9,29 +9,16 @@ import (
 	"strings"
 )
 
-//To access application/json request fields they have to be exported (capitalize)
-type body struct {
-	Search string `json:"search" example:"madgyvers"`
-}
 
 // Search godoc
 // @Summary Create user
 // @Description Creates an user
 // @Accept x-www-form-urlencoded
 // @Produce json
-// @Param main body search.body true "The string you want to search by"
+// @Param text formData string true "The string you want to search by"
 // @Success 200 {string} string "Everything went OK"
 // @Router /search [post]
 func Search(res http.ResponseWriter, req *http.Request) {
-	//if we accepted an application/json
-	//var search body
-	//decoder := json.NewDecoder(req.Body)
-	//err := decoder.Decode(&search)
-	//if err != nil {
-	//	http.Error(res, err.Error(), http.StatusInternalServerError)
-	//	return
-	//}
-
 	//cant define an example value for response in swaggo
 	//need to deploy it publicly
 	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling

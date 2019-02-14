@@ -30,14 +30,11 @@
                 "summary": "Create user",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "The string you want to search by",
-                        "name": "main",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/search.body"
-                        }
+                        "name": "text",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -47,17 +44,6 @@
                             "type": "string"
                         }
                     }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "search.body": {
-            "type": "object",
-            "properties": {
-                "search": {
-                    "type": "string",
-                    "example": "madgyvers"
                 }
             }
         }

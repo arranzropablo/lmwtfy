@@ -1,11 +1,4 @@
 basePath: '{{.BasePath}}'
-definitions:
-  search.body:
-    properties:
-      search:
-        example: madgyvers
-        type: string
-    type: object
 host: '{{.Host}}'
 info:
   contact:
@@ -28,12 +21,10 @@ paths:
       description: Creates an user
       parameters:
       - description: The string you want to search by
-        in: body
-        name: main
+        in: formData
+        name: text
         required: true
-        schema:
-          $ref: '#/definitions/search.body'
-          type: object
+        type: string
       produces:
       - application/json
       responses:
