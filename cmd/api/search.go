@@ -3,6 +3,7 @@ package search
 import (
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -20,7 +21,7 @@ type body struct {
 // @Success 200 {string} string "Everything went OK"
 // @Router /search [post]
 func Search(res http.ResponseWriter, req *http.Request) {
-	//if we accepted a json instead of x-www-form-urlencoded
+	//if we accepted an application/json
 	//var search body
 	//decoder := json.NewDecoder(req.Body)
 	//err := decoder.Decode(&search)
@@ -32,14 +33,20 @@ func Search(res http.ResponseWriter, req *http.Request) {
 	//cant define an example value for response in swaggo
 	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling
 
-	//why cant i parse it like this???
-	//slack sends application/json?
 	req.ParseForm()
-	search := req.FormValue("search")
+	search := req.FormValue("text")
+	var mention string
+
+	splt := regexp.MustCompile(" <@").Split(search, -1)
+
+	if splt != nil {
+		mention = "<@" + regexp.MustCompile("\\|").Split(splt[len(splt) - 1], -1)[0] + ">"
+		search = strings.Join(splt[:len(splt) - 1], "")
+	}
 
 	if link, ok := retrieveLink(search); ok {
 		res.WriteHeader(http.StatusOK)
-		res.Write([]byte(link))
+		res.Write([]byte(mention + " let me wiki that for you... \n" + link))
 	} else {
 		http.Error(res, "Empty search!!!", http.StatusInternalServerError)
 		return
