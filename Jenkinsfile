@@ -23,6 +23,7 @@ deploymentDefinition = new DeploymentDefinition(
 )
 
 loy.pipeline.builder()
+        .withLabel('golang')
         .withCheckout()
         .withDockerPublication(deploymentDefinition)
         .withMarathonProdDeployment(deploymentDefinition, [])
