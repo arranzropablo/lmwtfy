@@ -3,6 +3,7 @@ package search
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/arranzropablo/lmwtfy/cmd/env"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -22,8 +23,17 @@ func Search(res http.ResponseWriter, req *http.Request) {
 	//cant define an example value for response in swaggo
 	//need to deploy it publicly
 	//https://blog.golang.org/error-handling-and-go Simplifying repetitive error handling
-
 	req.ParseForm()
+
+	if req.Method != http.MethodPost {
+		http.Error(res, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+	if env.Token != req.FormValue("token") {
+		http.Error(res, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
+		return
+	}
+
 	search := req.FormValue("text")
 	var mention string
 
