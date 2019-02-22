@@ -1,4 +1,4 @@
 package env
 
-const PORT = ":8888"
+const PORT = ":80"
 var Token string

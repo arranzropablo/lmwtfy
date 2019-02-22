@@ -38,5 +38,6 @@ func main() {
 	http.HandleFunc("/search", search.Search)
 
 	log.Printf("Listening on http://127.0.0.1%s", env.PORT)
-	http.ListenAndServe(env.PORT, nil)
+	err := http.ListenAndServe(env.PORT, nil)
+	if err != nil { log.Fatalln(err) }
 }
