@@ -1,9 +1,9 @@
 workflow "Build" {
   on = "push"
-  resolves = ["Build"]
+  resolves = ["Build_action"]
 }
 
-action "Build" {
+action "Build_action" {
   uses = "apex/actions/go@master"
   args = "build -o lmwtfy cmd/main.go"
 }
