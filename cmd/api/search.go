@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-
 // Search godoc
 // @Summary Create user
 // @Description Creates an user
@@ -40,8 +39,8 @@ func Search(res http.ResponseWriter, req *http.Request) {
 	splt := regexp.MustCompile(" <@").Split(search, -1)
 
 	if len(splt) > 1 {
-		mention = "<@" + regexp.MustCompile("\\|").Split(splt[len(splt) - 1], -1)[0] + ">"
-		search = strings.Join(splt[:len(splt) - 1], "")
+		mention = "<@" + regexp.MustCompile("\\|").Split(splt[len(splt)-1], -1)[0] + ">"
+		search = strings.Join(splt[:len(splt)-1], "")
 	}
 
 	if link, ok := retrieveLink(search); ok {
@@ -51,7 +50,7 @@ func Search(res http.ResponseWriter, req *http.Request) {
 			Text string `json:"text"`
 		}{
 			Type: "in_channel",
-			Text: fmt.Sprintf("%s", mention + " let me wiki that for you... \n" + link),
+			Text: fmt.Sprintf("%s", mention+" let me wiki that for you... \n"+link),
 		})
 
 		res.Header().Add("Content-Type", "application/json")

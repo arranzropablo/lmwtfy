@@ -39,5 +39,7 @@ func main() {
 
 	log.Printf("Listening on http://127.0.0.1%s", env.PORT)
 	err := http.ListenAndServe(env.PORT, nil)
-	if err != nil { log.Fatalln(err) }
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
